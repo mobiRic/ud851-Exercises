@@ -27,6 +27,9 @@ import android.widget.TextView;
 
 import com.example.android.datafrominternet.utilities.NetworkUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.net.URL;
 
@@ -106,6 +109,33 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             return githubSearchResults;
+        }
+
+        void getJson(String dataJSONString) {
+            dataJSONString = "{\n" +
+                    "   \"temp\": {\n" +
+                    "      \"min\":\"11.34\",\n" +
+                    "      \"max\":\"19.01\"\n" +
+                    "   },\n" +
+                    "   \"weather\": {\n" +
+                    "      \"id\":\"801\",\n" +
+                    "      \"condition\":\"Clouds\",\n" +
+                    "      \"description\":\"few clouds\"\n" +
+                    "   },\n" +
+                    "   \"pressure\":\"1023.51\",\n" +
+                    "   \"humidity\":\"87\"\n" +
+                    "}";
+
+            String condition;
+            try {
+                JSONObject data = new JSONObject(dataJSONString);
+                JSONObject weather = data.getJSONObject("weather");
+                condition = weather.getString("condition");
+            } catch (JSONException e) {
+                e.printStackTrace();
+                condition = "Unknown weather conditions";
+            }
+
         }
 
         @Override
