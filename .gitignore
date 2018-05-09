@@ -1,0 +1,5 @@
+.gradle/
+.idea/
+ud851-Exercises.iml
+local.properties
+app/app.iml
