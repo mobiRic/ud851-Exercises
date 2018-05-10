@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -52,11 +53,17 @@ public class MainActivity extends AppCompatActivity {
         String address = "St James, Cape Town, South Africa";
 
         // TODO (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
-        Uri uri = new Uri.Builder()
-                .scheme("geo")
-                .path("0,0")
-                .query(address)
-                .build();
+//        Uri uri = new Uri.Builder()
+//                .scheme("geo")
+//                .path("0,0")
+//                .query(address)
+//                .build();
+//        Log.d("URI", uri.toString());
+        // the above code DOES NOT WORK
+        // see: https://github.com/udacity/ud851-Exercises/issues/70
+
+        Uri uri = Uri.parse("geo:0,0?q=" + Uri.encode(address));
+        Log.d("URI", uri.toString());
 
         // TODO (7) Replace the Toast with a call to showMap, passing in the Uri from the previous step
         showMap(uri);
