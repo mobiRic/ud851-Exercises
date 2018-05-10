@@ -23,7 +23,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.example.android.explicitintent.MainActivity">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -37,6 +37,13 @@
         <!--TODO (9) Create a meta-data tag for this Activity-->
         <!--TODO (10) Specify the name of the meta-data as android.support.PARENT_ACTIVITY-->
         <!--TODO (11) Specify the value of the meta data as .MainActivity-->
+        <activity
+            android:name=".ChildActivity"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity"/>
+        </activity>
     </application>
 
 </manifest>
