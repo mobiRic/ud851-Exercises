@@ -17,7 +17,6 @@ package com.example.android.asynctaskloader;
 
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -31,14 +30,13 @@ import android.widget.Toast;
 
 import com.example.android.asynctaskloader.utilities.NetworkUtils;
 
-import java.io.IOException;
 import java.net.URL;
 
 // TODO (1) implement LoaderManager.LoaderCallbacks<String> on MainActivity
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
 
     /* A constant to save and restore the URL that is being displayed */
-    private static final String SEARCH_QUERY_URL_EXTRA = "query";
+    public static final String SEARCH_QUERY_URL_EXTRA = "query";
 
     // TODO (28) Remove the key for storing the search results JSON
     /* A constant to save and restore the JSON that is being displayed */
@@ -155,52 +153,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public Loader<String> onCreateLoader(int id, final Bundle args) {
         // Within onCreateLoader
         // TODO (4) Return a new AsyncTaskLoader<String> as an anonymous inner class with this as the constructor's parameter
-        // FIXME: 15/05/2018 This anonymous class will leak the MainActivity
-        return new AsyncTaskLoader<String>(this) {
-            // TODO (5) Override onStartLoading
-            @Override
-            protected void onStartLoading() {
-                super.onStartLoading();
-                // Within onStartLoading
-
-                // TODO (6) If args is null, return.
-                if (args == null) {
-                    return;
-                }
-
-                // TODO (7) Show the loading indicator
-                mLoadingIndicator.setVisibility(View.VISIBLE);
-
-                // TODO (8) Force a load
-                forceLoad();
-                // END - onStartLoading
-            }
-
-            // TODO (9) Override loadInBackground
-            @Override
-            public String loadInBackground() {
-
-                // Within loadInBackground
-                // TODO (10) Get the String for our URL from the bundle passed to onCreateLoader
-                String searchUrl = args.getString(SEARCH_QUERY_URL_EXTRA);
-
-                // TODO (11) If the URL is null or empty, return null
-                if (TextUtils.isEmpty(searchUrl)) {
-                    return null;
-                }
-
-                // TODO (12) Copy the try / catch block from the AsyncTask's doInBackground method
-                String githubSearchResults = null;
-                try {
-                    githubSearchResults = NetworkUtils.getResponseFromHttpUrl(new URL(searchUrl));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return githubSearchResults;
-
-                // END - loadInBackground
-            }
-        };
+        return new GithubLoader(this, args, mLoadingIndicator);
     }
 
     // TODO (13) Override onLoadFinished
