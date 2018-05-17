@@ -76,8 +76,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements OnShar
 
         ListPreference listPref = (ListPreference) pref;
         int i = listPref.findIndexOfValue(value);
-        CharSequence label = listPref.getEntries()[i];
-        pref.setSummary(label);
+        if ((i >= 0) && (i < listPref.getEntries().length)) {
+            CharSequence label = listPref.getEntries()[i];
+            pref.setSummary(label);
+        }
     }
 
     // TODO (5) Register and unregister the OnSharedPreferenceChange listener (this class) in
