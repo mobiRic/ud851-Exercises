@@ -25,7 +25,6 @@ import android.support.v7.preference.ListPreference;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceScreen;
-import android.widget.Toast;
 
 
 public class SettingsFragment extends PreferenceFragmentCompat implements
@@ -82,9 +81,21 @@ public class SettingsFragment extends PreferenceFragmentCompat implements
                 // Set the summary to that label
                 listPreference.setSummary(listPreference.getEntries()[prefIndex]);
             }
+        } else if (preference instanceof EditTextPreference) {
+            EditTextPreference edit = (EditTextPreference) preference;
+            if (edit.getKey().equals(getString(R.string.pref_scale_key))) {
+                float scale;
+                try {
+                    scale = Float.parseFloat(value);
+                } catch (NumberFormatException e) {
+                    scale = 1.0f;
+                }
+
+                edit.setSummary(getString(R.string.pref_scale_summary, scale));
+            }
         }
     }
-    
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
