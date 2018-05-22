@@ -1,0 +1,7 @@
+.gradle/
+.idea/
+build/
+ud851-Exercises.iml
+local.properties
+app/app.iml
+droidtermsprovider/droidtermsprovider.iml
