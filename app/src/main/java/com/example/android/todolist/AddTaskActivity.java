@@ -57,8 +57,10 @@ public class AddTaskActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(newTask)) {
             return;
         }
+
         ContentValues values = new ContentValues(1);
         values.put(TaskContract.TaskEntry.COLUMN_DESCRIPTION, newTask);
+        values.put(TaskContract.TaskEntry.COLUMN_PRIORITY, mPriority);
 
         // TODO (7) Insert new task data via a ContentResolver
         Uri result = getContentResolver().insert(TaskContract.TaskEntry.CONTENT_URI, values);
