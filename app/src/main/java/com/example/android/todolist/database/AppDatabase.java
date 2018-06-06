@@ -1,5 +1,6 @@
 package com.example.android.todolist.database;
 
+import android.arch.persistence.room.BuildConfig;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
@@ -20,11 +21,15 @@ public abstract class AppDatabase extends RoomDatabase {
         if (sInstance == null) {
             synchronized (LOCK) {
                 Log.d(LOG_TAG, "Creating new database instance");
-                sInstance = Room.databaseBuilder(context.getApplicationContext(),
-                        AppDatabase.class, AppDatabase.DATABASE_NAME)
-                        // TODO (2) call allowMainThreadQueries before building the instance
-                        .allowMainThreadQueries()
-                        .build();
+                Builder<AppDatabase> builder = Room.databaseBuilder(context.getApplicationContext(),
+                        AppDatabase.class, AppDatabase.DATABASE_NAME);
+
+                // TODO (2) call allowMainThreadQueries before building the instance
+                // allow main thread access in development mode
+                if (BuildConfig.DEBUG) {
+                    builder.allowMainThreadQueries();
+                }
+                sInstance = builder.build();
             }
         }
         Log.d(LOG_TAG, "Getting the database instance");
