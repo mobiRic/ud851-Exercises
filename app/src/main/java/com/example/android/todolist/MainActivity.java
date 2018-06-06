@@ -26,6 +26,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
+import com.example.android.todolist.database.AppDatabase;
+import com.example.android.todolist.database.TaskEntry;
+
+import java.util.List;
+
 import static android.support.v7.widget.DividerItemDecoration.VERTICAL;
 
 
@@ -38,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
     private TaskAdapter mAdapter;
 
     // TODO (1) Create AppDatabase member variable for the Database
+    private AppDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         });
 
         // TODO (2) Initialize member variable for the data base
+        db = AppDatabase.getInstance(this);
     }
 
     /**
@@ -105,6 +112,8 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.ItemC
         super.onResume();
         // TODO (3) Call the adapter's setTasks method using the result
         // of the loadAllTasks method from the taskDao
+        List<TaskEntry> tasks = db.taskDao().loadAllTasks();
+        mAdapter.setTasks(tasks);
     }
 
     @Override
